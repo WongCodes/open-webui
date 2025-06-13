@@ -81,6 +81,7 @@ from open_webui.routers import (
     prompts,
     evaluations,
     tools,
+    plugins as plugins_router,
     users,
     utils,
 )
@@ -434,6 +435,7 @@ from open_webui.utils.auth import (
     get_verified_user,
 )
 from open_webui.utils.plugin import install_tool_and_function_dependencies
+from open_webui.plugin_loader import load_plugins
 from open_webui.utils.oauth import OAuthManager
 from open_webui.utils.security_headers import SecurityHeadersMiddleware
 from open_webui.utils.redis import get_redis_connection
@@ -537,6 +539,8 @@ app = FastAPI(
     redoc_url=None,
     lifespan=lifespan,
 )
+
+load_plugins(app)
 
 oauth_manager = OAuthManager(app)
 
@@ -1145,6 +1149,7 @@ app.include_router(
     evaluations.router, prefix="/api/v1/evaluations", tags=["evaluations"]
 )
 app.include_router(utils.router, prefix="/api/v1/utils", tags=["utils"])
+app.include_router(plugins_router.router, prefix="/api/v1/plugins", tags=["plugins"])
 
 
 try:
