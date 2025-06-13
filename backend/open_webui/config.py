@@ -3075,3 +3075,13 @@ LDAP_VALIDATE_CERT = PersistentConfig(
 LDAP_CIPHERS = PersistentConfig(
     "LDAP_CIPHERS", "ldap.server.ciphers", os.environ.get("LDAP_CIPHERS", "ALL")
 )
+
+####################################
+# PLUGINS CONFIG
+####################################
+
+PLUGINS = PersistentConfig(
+    "PLUGINS",
+    "plugins",
+    {},
+)

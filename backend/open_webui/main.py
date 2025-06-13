@@ -83,6 +83,7 @@ from open_webui.routers import (
     tools,
     users,
     utils,
+    plugins as plugins_router,
 )
 
 from open_webui.routers.retrieval import (
@@ -437,6 +438,7 @@ from open_webui.utils.plugin import install_tool_and_function_dependencies
 from open_webui.utils.oauth import OAuthManager
 from open_webui.utils.security_headers import SecurityHeadersMiddleware
 from open_webui.utils.redis import get_redis_connection
+from open_webui.plugin_manager import load_plugins
 
 from open_webui.tasks import (
     redis_task_command_listener,
@@ -1145,6 +1147,9 @@ app.include_router(
     evaluations.router, prefix="/api/v1/evaluations", tags=["evaluations"]
 )
 app.include_router(utils.router, prefix="/api/v1/utils", tags=["utils"])
+app.include_router(plugins_router.router, prefix="/api/v1/plugins", tags=["plugins"])
+
+load_plugins(app)
 
 
 try:
